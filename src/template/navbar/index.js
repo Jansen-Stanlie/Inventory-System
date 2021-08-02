@@ -19,20 +19,26 @@ class Navbar extends Component {
     checkLogin = () => {
         const {loginStatus, goToPage} = this.props;
         return (
-            <Menu
-                activePage={this.checkActivePage("productList")}
-                redirect={() =>
-                    loginStatus
-                        ? goToPage("productList")
-                        : Swal.fire(
-                        "Kijang Satu ganti",
-                        "Penyusup, bukan Admin Banteng",
-                        "error"
-                        )
-                }
-            >
-                ProductList
-            </Menu>
+            <Link to="/productlist">
+                <Menu
+                    activePage={this.checkActivePage("productList")}
+                    redirect={() =>
+                        loginStatus
+                            ?Swal.fire(
+                            "Kijang Satu ganti",
+                            "Admin Banteng",
+                            "success"
+                            )
+                            : Swal.fire(
+                            "Kijang Satu ganti",
+                            "Penyusup, bukan Admin Banteng",
+                            "error"
+                            )
+                    }
+                >
+                    ProductList
+                </Menu>
+            </Link>
         );
     };
     checkLogout = () => {
@@ -53,12 +59,12 @@ class Navbar extends Component {
             );
         return (
             <>
-                <Link to ="/login">
-                <Menu
-                    isActivePage={this.checkActivePage("login")}
-                >
-                    Login
-                </Menu>
+                <Link to="/login">
+                    <Menu
+                        isActivePage={this.checkActivePage("login")}
+                    >
+                        Login
+                    </Menu>
                 </Link>
             </>
         );
