@@ -13,13 +13,15 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Swal from "sweetalert2";
-
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			email: "",
 			password: "",
+			redirect: false,
 		};
 	}
 	handleChange = (event) => {
@@ -36,14 +38,17 @@ class Login extends Component {
 		console.log(`email : `, email);
 		console.log(`password : `, password);
 		if (email === "tokopedei" && password === "banteng") {
-			this.props.changeStat(true, "productList");
-			return Swal.fire("Yeahh...", "Login is success!", "success");
+			this.props.changeStat(true, "productlist");
+			return this.setState({
+				redirect: true,
+			});
 		} else {
 			return Swal.fire("Opss...", "Login is gagal!", "error");
 		}
 	};
 	render() {
 		const { email, password } = this.state;
+		if (this.state.redirect) return <Redirect to="/productlist" />;
 		return (
 			<Container component="main" maxWidth="xs">
 				<CssBaseline />
@@ -115,5 +120,11 @@ class Login extends Component {
 		);
 	}
 }
+const mapStateToProps = (state) => ({
+	isLogedIn: state.Auth.loginStatus,
+});
 
-export default Login;
+const mapDispatchToProps = (dispatch) => ({
+	doLogin: (user) => dispatch({ type: "LOGIN_OK", payload: { user } }),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

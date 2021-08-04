@@ -17,55 +17,29 @@ class Navbar extends Component {
         return "";
     };
     checkLogin = () => {
-        const {loginStatus, goToPage} = this.props;
-        return (
-            <Link to="/productlist">
-                <Menu
-                    activePage={this.checkActivePage("productList")}
-                    redirect={() =>
-                        loginStatus
-                            ?Swal.fire(
-                            "Kijang Satu ganti",
-                            "Admin Banteng",
-                            "success"
-                            )
-                            : Swal.fire(
-                            "Kijang Satu ganti",
-                            "Penyusup, bukan Admin Banteng",
-                            "error"
-                            )
-                    }
-                >
-                    ProductList
-                </Menu>
-            </Link>
-        );
+        const {loginStatus} = this.props;
+
     };
     checkLogout = () => {
-        const {loginStatus, changeStatus, goToPage} = this.props;
+        const {loginStatus, changeStatus} = this.props;
         if (loginStatus)
             return (
                 <>
-                    <Link to="/labarugi">
-                        <div className="menu">
-                            Laba Rugi
-                        </div>
+                    <Link to="/labarugi" activePage={this.checkActivePage("labarugi")}>
+                        <Menu className="menu">Laba Rugi</Menu>
                     </Link>
                     <Link to="/home">
                         <Menu redirect={() => changeStatus(false, "Home")}>Logout</Menu>
                     </Link>
-
                 </>
             );
         return (
             <>
-                <Link to="/login">
-                    <Menu
-                        isActivePage={this.checkActivePage("login")}
-                    >
-                        Login
-                    </Menu>
-                </Link>
+
+                <Menu className="menu" isActivePage={this.checkActivePage("login")}>
+                    <Link to="/login">Login</Link>
+                </Menu>
+
             </>
         );
     };
@@ -74,7 +48,31 @@ class Navbar extends Component {
     };
 
     render() {
-        const {goToPage} = this.props;
+        const {goToPage,loginStatus} = this.props;
+        // return (
+        //     <Menu
+        //         activePage={this.checkActivePage("productList")}
+        //         redirect={() =>
+        //             loginStatus ? (
+        //                 <Link to="/productlist">
+        //                     <Menu className="menu">
+        //
+        //                         ProductList
+        //
+        //                     </Menu>
+        //                 </Link>
+        //             ) : (
+        //                 Swal.fire(
+        //                     "Kijang Satu ganti",
+        //                     "Penyusup, bukan Admin Banteng",
+        //                     "error"
+        //                 )
+        //             )
+        //         }
+        //     >
+        //         ProductList
+        //     </Menu>
+        // );
         return (
             <>
                 <div className="topnav">
@@ -83,21 +81,17 @@ class Navbar extends Component {
                         activePage={this.checkActivePage("home")}
                         onClick={() => goToPage("home")}
                     >
-            <span>
-              <img src={logo} alt="logo"/>
-            </span>
+						<span>
+							<img src={logo} alt="logo"/>
+						</span>
                         Tokopedei
                     </div>
                     <div className="topnav-right">
                         <Link to="/home">
-                            <div className="menu">
-                                Home
-                            </div>
+                            <div className="menu">Home</div>
                         </Link>
                         <Link to="/about">
-                            <div>
-                                About
-                            </div>
+                            <div>About</div>
                         </Link>
                         {/*<Menu*/}
                         {/*    activePage={this.checkActivePage("home")}*/}
@@ -111,7 +105,7 @@ class Navbar extends Component {
                         {/*>*/}
                         {/*    About*/}
                         {/*</Menu>*/}
-                        {this.checkLogin()}
+
 
                         {/* <Menu
               activePage={this.checkActivePage("AddForm")}
